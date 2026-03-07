@@ -1,0 +1,14 @@
+---
+description: Documentation maintenance standards for project changes
+globs: docs/**/*.md
+alwaysApply: false
+---
+
+# Documentation and Milestones
+
+- Keep docs aligned with implementation details (routes, env vars, tools, and architecture).
+- Prefer updating existing docs (`docs/prd.md`, `docs/tech-stack.md`, `docs/tdd.md`) over creating new files.
+- When PRD and TDD conflict (e.g., project structure, endpoint paths, Docker vs pm2), TDD and CLAUDE.md are authoritative — they reflect the final design decisions.
+- Use concise, actionable language and keep command examples runnable.
+- When a major feature or milestone is completed, update `docs/architecture.md`.
+- Do not add extra markdown docs unless explicitly requested.

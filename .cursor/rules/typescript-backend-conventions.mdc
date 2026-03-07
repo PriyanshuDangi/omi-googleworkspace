@@ -1,0 +1,24 @@
+---
+description: TypeScript and backend structure conventions for this project
+globs: src/**/*.ts
+alwaysApply: false
+---
+
+# TypeScript Backend Conventions
+
+- Use Node.js + TypeScript strict style with `import`/`export` ESM syntax.
+- Use `.js` extensions in local imports (NodeNext compatibility).
+- ESM has no `__dirname`; use `path.dirname(fileURLToPath(import.meta.url))` for view/file paths.
+- Keep one concern per file and follow the project layout:
+  - `src/routes/*` for Express routes
+  - `src/services/*` for integrations/business logic
+  - `src/utils/*` for utilities
+  - `src/types/*` for shared types
+  - `src/views/*` for HTML templates
+- Prefer `const`; avoid `var`; use `let` only when reassignment is required.
+- Use `async/await` over `.then()` chains for async flow.
+- Use `try/catch` with meaningful error messages; never swallow errors silently.
+- Add explicit return types on exported functions.
+- Reuse shared types from `src/types` instead of inline duplicated types.
+- Log with pino (`logger` from `src/utils/logger.ts`); use `info` in production, `debug` for local dev.
+- Add short comments only when logic is non-obvious.

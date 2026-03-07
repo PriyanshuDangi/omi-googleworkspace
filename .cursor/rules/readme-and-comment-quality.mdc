@@ -1,0 +1,13 @@
+---
+description: README and code-comment quality expectations
+globs: README.md
+alwaysApply: false
+---
+
+# README and Comment Quality
+
+- Keep `README.md` accurate for setup, env vars, run commands, and deploy flow.
+- Keep examples in README consistent with actual script names and endpoint paths.
+- Reflect production reality: pm2 + `deploy.sh` flow, no Docker assumptions.
+- Include required env vars and secure key generation guidance (e.g., `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`).
+- Endpoint paths in README must use `/tools/*` (not `/api/tools/*` from the early PRD draft).

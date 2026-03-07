@@ -1,0 +1,24 @@
+---
+description: Omi tool route pattern, validation, and user-safe errors
+globs: src/routes/**/*.ts
+alwaysApply: false
+---
+
+# Omi Route and Error Patterns
+
+- For tool endpoints, resolve uid from `req.body?.uid` first, then query fallback.
+- Validate uid on every request; reject missing uid with `400` and `{ "error": "Missing uid parameter" }`.
+- Reject invalid uid format with `400` and `{ "error": "Invalid uid format" }`.
+- Validate required tool params with `400` and `{ "error": "Missing required parameter: <name>" }`.
+- On missing auth/session (per-endpoint `getValidAccessToken` failure), return `401` with:
+  `Google account not connected. Please connect your account in app settings.`
+- On token refresh expiry, return `401` with:
+  `Google session expired. Please reconnect your Google account in app settings.`
+- On gws CLI timeout, return `500` with:
+  `Request timed out. Please try again.`
+- On other command/tool failure, return `500` with:
+  `Failed to <action>. Please try again.`
+- Success responses must use `{ "result": "..." }`; failures must use `{ "error": "..." }`.
+- Never expose raw stack traces, stderr, or upstream provider error text to users.
+- Keep tool routes mounted at both `/tools/*` and `/auth/tools/*`.
+- TDD defines an optional session-check middleware on `/tools` that returns `403` when `hasTokens(uid)` is false. If implemented, this runs before route handlers and is separate from the per-endpoint `getValidAccessToken` 401 pattern.

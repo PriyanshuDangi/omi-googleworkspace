@@ -1,0 +1,21 @@
+---
+description: Service-layer rules for OAuth, gws CLI execution, and token security
+globs: src/services/**/*.ts
+alwaysApply: false
+---
+
+# Services: OAuth, gws, and Security
+
+- Invoke Google Workspace CLI using `execFile`, never `exec`.
+- Pass CLI args as an array; never build shell command strings from user input.
+- Set `GOOGLE_WORKSPACE_CLI_TOKEN` in env per request and keep a 30s timeout on gws calls.
+- Support the `GWS_BIN` env var (default `'gws'`) so tests can point to a mock binary.
+- Handle empty stdout safely (for operations like calendar delete) before JSON parsing.
+- Treat gws JSON `error` payloads as failures and map them to user-safe route errors.
+- Encrypt OAuth tokens at rest using AES-256-GCM; never store plaintext tokens.
+- Validate `ENCRYPTION_KEY` length (32 bytes / 64 hex chars) at startup.
+- Token store must export `saveTokens`, `getTokens`, `deleteTokens`, and `hasTokens`.
+- Validate uid format before any token lookup or mutation.
+- Always call `getValidAccessToken()` for each request; do not cache access tokens in memory.
+- Use a new OAuth2Client instance for token refresh calls to avoid cross-user race issues.
+- Use `prompt: 'consent'` in OAuth URL to always receive a refresh token.
