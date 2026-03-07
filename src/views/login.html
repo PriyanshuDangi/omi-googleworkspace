@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Omi + Google Workspace</title>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #0a0a0a;
+        color: #f5f5f5;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+      .card {
+        width: 100%;
+        max-width: 560px;
+        background: #111111;
+        border: 1px solid #262626;
+        border-radius: 16px;
+        padding: 32px;
+      }
+      h1 {
+        margin: 0 0 12px;
+        font-size: 30px;
+        line-height: 1.1;
+        background: linear-gradient(120deg, #4285f4, #34a853);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      p {
+        margin: 0;
+        color: #d4d4d4;
+        line-height: 1.5;
+      }
+      .btn {
+        margin-top: 24px;
+        width: 100%;
+        border: 0;
+        border-radius: 12px;
+        background: #4285f4;
+        color: white;
+        padding: 14px 18px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .btn:hover {
+        background: #3b78dc;
+      }
+      .message {
+        margin-top: 16px;
+        color: #fca5a5;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <h1>Omi + Google Workspace</h1>
+      <p>Connect your Google account to manage Gmail and Calendar from Omi chat.</p>
+      <button id="signin" class="btn">Sign in with Google</button>
+      <p id="message" class="message"></p>
+    </main>
+
+    <script>
+      const uid = new URLSearchParams(window.location.search).get('uid');
+      const message = document.getElementById('message');
+      const button = document.getElementById('signin');
+
+      if (!uid) {
+        message.textContent = 'Missing uid parameter. Please open this page from Omi app settings.';
+        button.disabled = true;
+      } else {
+        button.addEventListener('click', () => {
+          window.location.href = `/auth/login?uid=${encodeURIComponent(uid)}`;
+        });
+      }
+    </script>
+  </body>
+</html>
